@@ -95,6 +95,7 @@ function MENU.Init()
 	menu.SunAlpha = 255;
 	menu.ButtonAlpha = 255;
 	menu.Fade = false;
+	menu.lines = 0;
 	global.Alpha = 255;
 
 	--Lets get rid of variables we don't need.
@@ -125,7 +126,7 @@ function MENU.Draw()
 
 	--Draw our sun
 	love.graphics.setColor( c.Gold.r, c.Gold.g, c.Gold.b, 255 );
-	love.graphics.draw( img.Base, global.mouse.x, global.mouse.y, 0, 4, 4, 256, 256 ); -- Part of framerate problem, why?
+	love.graphics.draw( img.Base, 512, 384, 0, 1, 1, 500, 500 ); -- Part of framerate problem, why?
 	love.graphics.circle( "fill", 512, 384, menu.SunSize, 100 ); -- Same
 	love.graphics.setColor( 255, 255, 255, 255 );
 
@@ -223,7 +224,7 @@ function MENU.Update(dt)
 
 	menu.Rotate = menu.Rotate + 0.01;
 	if menu.Rotate > 360 then menu.Rotate = 0; end
-	menu.SlowRotate = menu.SlowRotate + 0.0025;
+	menu.SlowRotate = menu.SlowRotate + 0.001;
 	if menu.SlowRotate > 360 then menu.SlowRotate = 0; end
 
 	for i = 1, #menu.Buttons do

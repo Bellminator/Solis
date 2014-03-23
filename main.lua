@@ -46,7 +46,7 @@ function love.load()
 	--img
 	img = {};
 
-		img.Base = love.graphics.newImage( "img/atmosphere_new.png" );
+		img.Base = love.graphics.newImage( "img/atmosphere.png" );
 		img.Sound = love.graphics.newImage( "img/sound.png" );
 		img.NoSound = love.graphics.newImage( "img/nosound.png" );
 		img.Trans = love.graphics.newImage("img/trans.png")
