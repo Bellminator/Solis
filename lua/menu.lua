@@ -95,7 +95,7 @@ function MENU.Init()
 	menu.SunAlpha = 255;
 	menu.ButtonAlpha = 255;
 	menu.Fade = false;
-	menu.lines = 0;
+	menu.lines = {};
 	global.Alpha = 255;
 
 	--Lets get rid of variables we don't need.
@@ -117,11 +117,12 @@ function MENU.Draw()
 	end
 
 	love.graphics.setColor( 255, 255, 255, GLOBAL.getAlpha( 150 ) );
-	--Lines bitches
+
+	--Draw our sunbeams
 	for i = 1, 21 do
-		local x = math.cos( menu.SlowRotate + i )*global.windowsize.x*(global.curAlpha/255);
-		local y = math.sin( menu.SlowRotate + i )*global.windowsize.y*(global.curAlpha/255);
-		love.graphics.line( 512, 384, 512 + x, 384 + y );
+		if menu.lines[i] then
+			love.graphics.line( 512, 384, 512 + menu.lines[i].x, 384 + menu.lines[i].y );
+		end
 	end
 
 	--Draw our sun
@@ -224,7 +225,7 @@ function MENU.Update(dt)
 
 	menu.Rotate = menu.Rotate + 0.01;
 	if menu.Rotate > 360 then menu.Rotate = 0; end
-	menu.SlowRotate = menu.SlowRotate + 0.001;
+	menu.SlowRotate = menu.SlowRotate + 0.0005;
 	if menu.SlowRotate > 360 then menu.SlowRotate = 0; end
 
 	for i = 1, #menu.Buttons do
@@ -266,6 +267,13 @@ function MENU.Update(dt)
 			global.curAlpha = 255;
 			global.map = menu.Fade
 		end
+	end
+	
+	--Turn our sunbeans around
+	for i = 1, 21 do
+		local x = math.cos( menu.SlowRotate + i )*global.windowsize.x*(global.curAlpha/255);
+		local y = math.sin( menu.SlowRotate + i )*global.windowsize.y*(global.curAlpha/255);
+		menu.lines[i] = { x = x, y = y }
 	end
 end
 
