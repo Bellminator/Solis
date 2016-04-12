@@ -59,7 +59,7 @@ function love.load()
 		love.graphics.setBackgroundColor( 0, 0, 0 );
 
 		--(x, y, fullscreen, vsycn, fsaa)
-		love.window.setMode( global.windowsize.x, global.windowsize.y, {fullscreen=false, vsync=false, fsaa=0} );
+		love.window.setMode( global.windowsize.x, global.windowsize.y, {fullscreen=false, vsync=false} );
 
 	--audio/music
 		--in-game songs

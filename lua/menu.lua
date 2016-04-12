@@ -110,12 +110,13 @@ function MENU.Draw()
 	local c = color;
 
 	love.graphics.setColor( c.White.r, c.White.g, c.White.b, global.curAlpha );
-	love.graphics.setPointStyle("smooth")
+	love.graphics.points( menu.Stars );
+--[[
 	for i = 1, #menu.Stars do
 		love.graphics.setPointSize( menu.Stars[i][3] )
 		love.graphics.point( menu.Stars[i][1], menu.Stars[i][2] );
 	end
-
+]]--
 	love.graphics.setColor( 255, 255, 255, GLOBAL.getAlpha( 150 ) );
 
 	--Draw our sunbeams
@@ -223,16 +224,16 @@ end
 function MENU.Update(dt)
 	if menu.newState ~= menu.State and menu.State ~= "t" then menu.State = "t"; end
 
-	menu.Rotate = menu.Rotate + 0.01;
+	menu.Rotate = menu.Rotate + 1*dt;
 	if menu.Rotate > 360 then menu.Rotate = 0; end
-	menu.SlowRotate = menu.SlowRotate + 0.0005;
+	menu.SlowRotate = menu.SlowRotate + 0.05*dt;
 	if menu.SlowRotate > 360 then menu.SlowRotate = 0; end
 
 	for i = 1, #menu.Buttons do
 		if menu.Buttons[i].state == menu.State then
 			local v = menu.Buttons[i];
-			if v.active and v.rad > v.crad then v.crad = v.crad + 5;
-			elseif not v.active and v.crad > 0 then v.crad = v.crad - 5; end
+			if v.active and v.rad > v.crad then v.crad = v.rad;
+			elseif not v.active and v.crad > 0 then v.crad = 0; end
 		end
 	end
 
