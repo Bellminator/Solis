@@ -98,7 +98,7 @@ end
 
 function CONSOLE.Update(dt)
 	if love.keyboard.isDown("lshift") then console.Shift = true; else console.Shift = false; end
-	console.BTime = console.BTime + 0.05;
+	console.BTime = console.BTime + 1*dt;
 	if console.BTime >= 1 then console.Blink = "|";
 	else console.Blink = " "; end
 	if console.BTime > 2 then console.BTime = 0; end

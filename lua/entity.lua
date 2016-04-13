@@ -24,10 +24,10 @@ function ENT.Update()
 	end 
 end
 
-function ENT.mousePressed( x, y, button )
+function ENT.mousePressed( x, y, button, istouch )
 	for i = 1, #entities do
 		if entities[i] and entities[i].captureMouse then
-			entities[i]:mousePressed( x, y, button );
+			entities[i]:mousePressed( x, y, button, istouch );
 		end
 	end
 end

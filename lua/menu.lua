@@ -28,7 +28,7 @@ function MENU.Init()
 			menu.Buttons[2].text = "Fullscreen";
 			settings.fullscreen = false;
 			global.windowsize.x, global.windowsize.y = 1024, 768;
-			love.window.setMode( 1024, 768, {fullscreen=false, vsync=true, fsaa=2} );
+			love.window.setMode( 1024, 768, {fullscreen=false, vsync=true} );
 			GLOBAL.saveConfig();
 		else
 			local modes = love.window.getFullscreenModes()
@@ -37,7 +37,7 @@ function MENU.Init()
 			menu.Buttons[2].text = "Windowed";
 			settings.fullscreen = true;
 			global.windowsize.x, global.windowsize.y = modes[1].width, modes[1].height;
-			love.window.setMode( modes[1].width, modes[1].height, {fullscreen=false, vsync=true, fsaa=2} );
+			love.window.setMode( modes[1].width, modes[1].height, {fullscreen=false, vsync=true} );
 			GLOBAL.saveConfig();
 		end
 	end
@@ -134,8 +134,6 @@ function MENU.Draw()
 
 	local x, y = GLOBAL.getTextPos( "Solis", 512, 384, 1 );
 	love.graphics.print( "Solis", x, y );
-	local x, y = GLOBAL.getTextPos( "By Nick Bellamy", 512, 768/1.85, 0.2 );
-	love.graphics.print("By Nick Bellamy", x, y, 0, 0.2, 0.2 );
 
 	love.graphics.push();
 	love.graphics.translate( love.graphics.getWidth()/(love.graphics.getWidth()/3), love.graphics.getHeight()/(love.graphics.getHeight()/3) );
@@ -208,16 +206,6 @@ function MENU.Draw()
 		love.graphics.print( "Solis", x, y );
 		local x, y = GLOBAL.getTextPos( "By Nick Bellamy", 512, 768/1.85, 0.2 );
 		love.graphics.print("By Nick Bellamy", x, y, 0, 0.2, 0.2 );
-
-		if menu.SunAlpha > 1 then
-			menu.lastState = menu.State;
-			menu.SunAlpha = menu.SunAlpha - 1;
-			menu.ButtonAlpha = menu.ButtonAlpha + 1;
-		else
-			menu.SunFull = false;
-			menu.SunAlpha = 255;
-			menu.ButtonAlpha = 255;
-		end
 	end
 end
 
@@ -251,13 +239,25 @@ function MENU.Update(dt)
 	end
 
 	if menu.State == "t" then
-		if menu.ButtonAlpha > 1 then menu.ButtonAlpha = menu.ButtonAlpha - 5; end
+		if menu.ButtonAlpha > 1 then menu.ButtonAlpha = menu.ButtonAlpha - 500*dt; end
 
-		menu.SunSize = menu.SunSize + 5;
+		menu.SunSize = menu.SunSize + 200*dt;
 		if menu.SunSize > global.windowsize.x then
 			menu.State = menu.newState;
 			menu.SunFull = true;
 			menu.SunSize = 150;
+		end
+	end
+
+	if menu.SunFull then
+		if menu.SunAlpha > 1 then
+			menu.lastState = menu.State;
+			menu.SunAlpha = menu.SunAlpha - 100*dt;
+			menu.ButtonAlpha = menu.ButtonAlpha + 100*dt;
+		else
+			menu.SunFull = false;
+			menu.SunAlpha = 255;
+			menu.ButtonAlpha = 255;
 		end
 	end
 
@@ -270,7 +270,7 @@ function MENU.Update(dt)
 		end
 	end
 	
-	--Turn our sunbeans around
+	--Turn our sunbeams around
 	for i = 1, 21 do
 		local x = math.cos( menu.SlowRotate + i )*global.windowsize.x*(global.curAlpha/255);
 		local y = math.sin( menu.SlowRotate + i )*global.windowsize.y*(global.curAlpha/255);
@@ -278,8 +278,8 @@ function MENU.Update(dt)
 	end
 end
 
-function MENU.mousePressed( x, y, button )
- 	if button == "l" then
+function MENU.mousepressed( x, y, button, istouch )
+ 	if button == 1 then
 		for i = 1, #menu.Buttons do
 			if menu.Buttons[i].state == menu.State then
 				local ax, ay = math.cos( menu.Rotate + i )*10, math.sin( menu.Rotate + i)*10;

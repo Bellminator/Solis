@@ -227,9 +227,9 @@ function GAME.Update(dt)
 	end
 end
 
-function GAME.mousePressed( x, y, button )
+function GAME.mousePressed( x, y, button, istouch )
 	if pause.Enabled then
-		PAUSE.mousePressed( x, y, button );
+		PAUSE.mousePressed( x, y, button, istouch );
 	else
 		if button == "wu" and game.scale < 0.9 then game.scale = game.scale + 0.1; end
 		if button == "wd" and game.scale > 0.1 then game.scale = game.scale - 0.1; end

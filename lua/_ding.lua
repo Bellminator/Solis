@@ -191,7 +191,7 @@ end
 function DING.keyPressed( key, unicode )
 end
 
-function DING.mousePressed( x, y, button )
+function DING.mousePressed( x, y, button, istouch )
 	if DING.module["console"] and console.Enabled then return false; end
 
 	if button == "l" then

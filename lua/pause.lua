@@ -93,7 +93,7 @@ function PAUSE.Update(dt)
 	end
 end
 
-function PAUSE.mousePressed( x, y, button )
+function PAUSE.mousePressed( x, y, button, istouch )
  	--Use global:checkHover();
  	if button == "l" then
 	 	for k,v in ipairs( pause.Poptions ) do

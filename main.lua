@@ -82,8 +82,6 @@ function love.load()
 	
 	--Start up our gamestates
 	global.newState = MENU;
-	local stop = os.clock();
-	GLOBAL.getTime( "Main.lua", start, stop );
 end
 
 function love.draw()
@@ -137,8 +135,8 @@ function love.keypressed( key, unicode )
 	end;
 end;
 
-function love.mousepressed( x, y, button )
-	global.gameState.mousePressed( x, y, button );
+function love.mousepressed( x, y, button, istouch )
+	global.gameState.mousepressed( x, y, button, istouch );
 end;
 
 --Class system
